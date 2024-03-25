@@ -5,7 +5,7 @@
     <classes>
       <class name="magentoTest.testmagentotask">
         <methods>
-          <include name="SignUpProcess"/>
+          <include name="AddOneItemRandomToTheCart"/>
           <include name="befortest"/>
           <include name="aftertest"/>
         </methods>

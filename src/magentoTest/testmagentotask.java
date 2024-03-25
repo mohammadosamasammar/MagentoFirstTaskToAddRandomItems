@@ -1,5 +1,7 @@
 package magentoTest;
 
+import static org.testng.Assert.assertEquals;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
@@ -13,11 +15,14 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import dev.failsafe.internal.util.Assert;
+
 public class testmagentotask {
 
 	WebDriver driver = new ChromeDriver();
 	Random rand = new Random();
 	String URL = "https://magento.softwaretestingboard.com/";
+	String MyPass = "Osamasammar105";
 
 	@BeforeTest
 
@@ -39,7 +44,7 @@ public class testmagentotask {
 
 		List<WebElement> allitems = items.findElements(By.tagName("li"));
 
-		int Randomitems = rand.nextInt(4);
+		int Randomitems = rand.nextInt(allitems.size());
 
 		allitems.get(Randomitems).click();
 		Thread.sleep(2000);
@@ -80,24 +85,34 @@ public class testmagentotask {
 			addtocart.click();
 
 			Thread.sleep(2000);
-		}
+			}
+		
+		WebElement SuccesfullMsg = driver.findElement(By.xpath("//*[@id=\"maincontent\"]/div[1]/div[2]/div/div/div"));
+		Boolean Actual = SuccesfullMsg.getText().contains("You added");
+		Boolean Epected = true ;
+		
+		assertEquals(Actual, Epected);
+		
+		Thread.sleep(2000);
 
 	}
 
-	@Test(priority = 2, description = "this is my 2st test to check out")
+	@Test(enabled = false ,  priority = 2, description = "this is my 2st test to check out")
 	public void CheckOutProcess() throws InterruptedException {
 		String CheckOutPage = "https://magento.softwaretestingboard.com/checkout/cart/";
 		driver.get(CheckOutPage);
 		Thread.sleep(2000);
 		WebElement proceedToCheckOut = driver.findElement(By.xpath("//button[@data-role='proceed-to-checkout']"));
 		proceedToCheckOut.click();
+		Thread.sleep(2000);
 	}
 
-	@Test(priority = 3 , description = "this is my 3st test to signup page")
+	@Test(enabled = false ,priority = 3 , description = "this is my 3st test to signup page")
 	public void SignUpProcess() throws InterruptedException {
 		
 		Thread.sleep(2000);
 		
+		String ExpectedMsg = "Thank you for registering with Main Website Store.";
 		WebElement email = driver.findElement(By.xpath("//div[@class='control _with-tooltip']//input[@id='customer-email']"));
 		WebElement firstName = driver.findElement(By.name("firstname"));
 		WebElement lastName = driver.findElement(By.name("lastname"));
@@ -108,7 +123,7 @@ public class testmagentotask {
 		WebElement Country = driver.findElement(By.name("country_id"));
 		WebElement PhoneNumber = driver.findElement(By.name("telephone"));
 
-		email.sendKeys("osamasammar1@gmail.com");
+		email.sendKeys("osamasammar7@gmail.com");
 		Thread.sleep(1000);
 		firstName.sendKeys("osama");
 		Thread.sleep(1000);
@@ -126,12 +141,46 @@ public class testmagentotask {
 		select.selectByVisibleText("Jordan");
 		Thread.sleep(1000);
 		PhoneNumber.sendKeys("962788807640");
+		Thread.sleep(4000);
+		
+		
+		WebElement NextButton = driver.findElement(By.xpath("//*[@id=\"shipping-method-buttons-container\"]/div/button"));
 		Thread.sleep(1000);
+		NextButton.click();
+		Thread.sleep(3000);
+		
+		WebElement PlaceOrder = driver.findElement(By.cssSelector(".action.primary.checkout"));
+		Thread.sleep(1000);
+		PlaceOrder.click();
+		Thread.sleep(3000);
+		
+		WebElement CreateAnAcount = driver.findElement(By.xpath("//a[@href = 'https://magento.softwaretestingboard.com/checkout/account/delegateCreate/']\r\n"));
+		Thread.sleep(1000);
+		CreateAnAcount.click();
+		Thread.sleep(3000);
+		
+		WebElement Password = driver.findElement(By.id("password"));
+		Thread.sleep(1000);
+		Password.sendKeys(MyPass);
+		Thread.sleep(2000);
 		
 		
-		WebElement Nextbutton = driver.findElement(By.cssSelector(".button.action.continue.primary.custom-cursor-on-hover"));
-		Nextbutton.click();
+		WebElement ConfirmPassword = driver.findElement(By.id("password-confirmation"));
+		Thread.sleep(1000);
+		ConfirmPassword.sendKeys(MyPass);
+		Thread.sleep(3000);
 		
+		WebElement CreateAnAcount2 = driver.findElement(By.cssSelector(".action.submit.primary"));
+		Thread.sleep(1000);
+		CreateAnAcount2.click();
+		Thread.sleep(3000);
+		
+		WebElement SuccesfullMsg = driver.findElement(By.xpath("//*[@id=\"maincontent\"]/div[1]/div[2]/div/div/div"));
+		String ActualMsg = SuccesfullMsg.getText();
+		
+		Thread.sleep(2000);
+		
+		assertEquals(ActualMsg, ExpectedMsg);
 		
 	}
 
