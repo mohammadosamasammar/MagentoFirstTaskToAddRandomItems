@@ -97,7 +97,7 @@ public class testmagentotask {
 
 	}
 
-	@Test(enabled = false ,  priority = 2, description = "this is my 2st test to check out")
+	@Test( priority = 2, description = "this is my 2st test to check out")
 	public void CheckOutProcess() throws InterruptedException {
 		String CheckOutPage = "https://magento.softwaretestingboard.com/checkout/cart/";
 		driver.get(CheckOutPage);
@@ -107,7 +107,7 @@ public class testmagentotask {
 		Thread.sleep(2000);
 	}
 
-	@Test(enabled = false ,priority = 3 , description = "this is my 3st test to signup page")
+	@Test( priority = 3 , description = "this is my 3st test to signup page")
 	public void SignUpProcess() throws InterruptedException {
 		
 		Thread.sleep(2000);
